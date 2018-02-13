@@ -1,0 +1,92 @@
+1) Write a C program to achieve the following
+a. Get two file names command line arguments
+b. First file is input file and second is output file
+c. Read input lines by line
+d. Tokenize the line to get tokens (separated by comma(,), space, semicolon(;) etc)
+e. Write line, no. of tokens and the tokens in o/p file
+
+2) Write a program that takes an input from a file and read into an array.
+   Build this array as dynamic array. Find the largest and smallest elements.
+   Input is a list of names
+3) Write a program that reads from an input file (having a set of names) and store the same in a linked list.
+a. Display the contents of linked list
+b. Traverse the linked list and deleted all nodes having names whose length is less than 10 chars
+c. Display the contents of updated linked list
+
+4) Consider two text files. The first one is having a list of employees and 
+their department numbers stored (that is empid, ename, deptid, and there is 
+one record per line). The second one is having the departments along with their 
+names and location (that is deptid, deptname, dlocation). Read the files and 
+construct structures having all this data (that is empid, ename, deptid, dname, 
+dlocation). Display the list of structures and save this information in another file.
+
+5) Write a C program to achieve the following
+a. Read the name of one input file and 1 output file through command line.
+b. Read all the words from the input file, remove duplicates and then store the 
+   words in the output file one on each line.
+c. Please think of good method to remove duplicates.
+
+6) Write a C program to achieve the following
+a. Read the name of one input file and 2 output files (through user input)
+b. The input file is having text data like (employeeid, employeename, salary, departmentid)
+c. You need to read the data and produce two output files. One output file will 
+   be having data sorted on employee name, and another output file will be having 
+   data sorted on employee number.
+
+7) Write a program to do the following,
+a) It should simulate the behavior of the Linux command “who”. That is it 
+   fetches the details of the users who have logged in the system and print 
+   their details. The details should include at least the user ids, username, 
+   IP address from where logged in. Also note that one user can login multiple times.
+b) While solving this, you need to use proper data structure to store the user details.
+c) Note the following API’s that will help you fetch the raw accounting 
+   information from the operating system’s records.
+a. struct utmpx *getutxent(void); struct passwd *getpwnam(const char *name);
+Ref: http://pubs.opengroup.org/onlinepubs/007908775/xsh/endutxent.html
+http://pubs.opengroup.org/onlinepubs/009695399/functions/getpwnam.html
+utmpx structure (Apart from the links mentioned please search for more in google)
+Ref: http://pubs.opengroup.org/onlinepubs/009695399/basedefs/utmpx.h.html
+https://en.wikipedia.org/wiki/Utmp
+passwd structure
+Ref: http://pubs.opengroup.org/onlinepubs/009695399/basedefs/pwd.h.html
+The main loop might look like,
+struct utmpx *ret;
+struct passwd *uentry;
+while ((ret = getutxent())!=NULL)
+{
+if (USER_PROCESS == ret->ut_type)
+{
+/*fetch userid for this user*/
+uentry = getpwnam(ret->ut_user);
+if (NULL == uentry)
+{
+/*Could not fetch user id for this username(ret->ut_user)*/
+}
+else
+{
+/*Add/Update Entries in your data structure*/
+}
+}
+/*Now display the populated details*/
+}
+
+8) Write a program to do the following,
+a) It should simulate the behavior of the Linux command “ls”. That is, it 
+   fetches the details of all files and directories from a given path and 
+   displays it along with the file attributes to the user.
+b) Note the following API’s that will help you fetch the raw accounting information 
+    from the operating system’s records.
+a. opendir()
+b. readdir()
+c. stat()
+Reference:
+http://pubs.opengroup.org/onlinepubs/009695399/functions/opendir.html
+http://pubs.opengroup.org/onlinepubs/009695399/functions/readdir.html
+http://pubs.opengroup.org/onlinepubs/009695399/functions/stat.html
+c) The basic steps will be
+a. Open a directory (to get the handle) using opendir
+b. In a loop call readdir to read the directory entries
+i. Handle cases for . and ..
+ii. Populate the stat structure by calling stat (here you need to use the absolute name of a file or directory)
+iii. If you get a directory move down to this directory
+iv. If you get a file print the attributes of this file.

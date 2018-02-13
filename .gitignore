@@ -50,3 +50,14 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+#Backup files of vim.
+*~
+
+# The .layout-file of codeBlocks
+*.layout
+
+# The backupfiles of vim
+*.swp
+
+
