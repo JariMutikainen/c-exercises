@@ -10,6 +10,7 @@
 #include <string.h>
 
 #define MAX 100 // Max length of the full path name of a given file
+#define LINELENGTH 81 // Maximum length of one line in the text file +1 for \0.
 
 int main(int argc, char *argv[])
 {
@@ -17,6 +18,7 @@ int main(int argc, char *argv[])
     FILE *out;
     char iFileName[MAX] =  "/h/GitHubLocalRepository/c-exercises/fileIO/";
     char oFileName[MAX] =  "/h/GitHubLocalRepository/c-exercises/fileIO/";
+    char *completeLine;
     if(argc != 3) {
         printf("Incorrect number of arguments. Try next time fileIO.exe in.txt out.txt.\n");
         return 1;
@@ -25,6 +27,7 @@ int main(int argc, char *argv[])
     strcat(oFileName,argv[2]); // String concatenation
 
     printf("%s --- %s\n",iFileName,oFileName);
+    completeLine = (char *) malloc(LINELENGTH * sizeof(char));
     
     printf("Hello world!\n");
     return 0;
