@@ -12,6 +12,8 @@ int main()
 {
     
     void determineArraySize(FILE* inFile,int* names,int* longestName);
+    char** allocateMemory(int rows, int columns);
+    void populateNameTable(char** tbl,int rows, FILE* inFile);
 
     FILE* inFile;
     char iFileName[] =  
@@ -24,19 +26,9 @@ int main()
     fclose(inFile); // Close and re-open to init the read pointer of the file
     inFile = fopen(iFileName,"r"); // back into the begining
 
-    // Allocate memory from the heap for a 2-dimensional array as needed.
-    // The elements of the nameTable[] are pointers to char - i.e.
-    // pointers to the 1st character of each row (= each name).
-    // To avoid some complexity the reservation is (longestName + 1) bytes
-    // for all the names. +1 is there to accommodate for the '\0' at the end 
-    // of the longestName. I decided not to make the array jagged.
-    // The reserved memory is contiguous.
-    char **nameTable = (char **) malloc(names * sizeof(char *));
-    nameTable[0] = (char *) malloc(names * (longestName+1) * sizeof(char));
-    int i;
-    for(i=1;i<names;i++) {
-        nameTable[i] = nameTable[0] + i * (longestName+1);
-    }
+    char** nameTable = allocateMemory(names,longestName+1);
+    populateNameTable(nameTable,names,inFile);
+
 
 
     printf("Hello world!\n");
@@ -54,5 +46,32 @@ void determineArraySize(FILE* inFile,int* names,int* longestName) {
             *longestName = strlen(name);  // A new max has been found.
         }
     }
+    return;
+}
+//------------------------------ allocateMemory ------------------------------  
+char** allocateMemory(int rows, int columns) {
+    // Allocate memory from the heap for a 2-dimensional array as needed.
+    // The elements of the nameTable[] are pointers to char - i.e.
+    // pointers to the 1st character of each row (= each name).
+    // To avoid some complexity the reservation is (longestName + 1) bytes
+    // for all the names. +1 is there to accommodate for the '\0' at the end 
+    // of the longestName. I decided not to make the array jagged.
+    // The reserved memory is contiguous.
+    char **matrix = (char **) malloc(rows * sizeof(char *));
+    matrix[0] = (char *) malloc(rows * columns * sizeof(char));
+    int i;
+    for(i=1;i<rows;i++) {
+        matrix[i] = matrix[0] + i * columns;
+    }
+    return matrix;
+}
+//------------------------------ populateNameTable --------------------  
+void populateNameTable(char** tbl,int rows, FILE* inFile) {
+    // This function reads the names from the inFile and writes them into
+    // the allocated character arrays in the heap. The pointer to the 1st 
+    // char of i:th such character array is tbl[i].
+
+
+
     return;
 }
