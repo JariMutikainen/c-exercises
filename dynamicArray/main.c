@@ -14,6 +14,7 @@ int main()
     void determineArraySize(FILE* inFile,int* names,int* longestName);
     char** allocateMemory(int rows, int columns);
     void populateNameTable(char** tbl,int rows, FILE* inFile);
+    void printNameTable(char** tbl,int rows);
 
     FILE* inFile;
     char iFileName[] =  
@@ -22,12 +23,13 @@ int main()
     int longestName = 0; // Number of characters in the longest name
     inFile = fopen(iFileName,"r"); 
     determineArraySize(inFile,&names,&longestName);
-    printf("Names = %d, Longest name = %d",names,longestName);
+    printf("Names = %d, Longest name = %d\n",names,longestName);
     fclose(inFile); // Close and re-open to init the read pointer of the file
     inFile = fopen(iFileName,"r"); // back into the begining
 
     char** nameTable = allocateMemory(names,longestName+1);
     populateNameTable(nameTable,names,inFile);
+    printNameTable(nameTable,names);
 
 
 
@@ -70,8 +72,18 @@ void populateNameTable(char** tbl,int rows, FILE* inFile) {
     // This function reads the names from the inFile and writes them into
     // the allocated character arrays in the heap. The pointer to the 1st 
     // char of i:th such character array is tbl[i].
-
-
-
+    int r;
+    for(r=0;r<rows;r++) {
+        fscanf(inFile,"%s",tbl[r]);
+    }
+    return;
+}
+//------------------------------ printNameTable --------------------  
+void printNameTable(char** tbl,int rows) {
+    // This function prints all the names in the nameTable.
+    int r;
+    for(r=0;r<rows;r++) {
+        printf("%s\n",tbl[r]);
+    }
     return;
 }
