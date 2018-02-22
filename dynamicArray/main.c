@@ -15,12 +15,14 @@ int main()
     char** allocateMemory(int rows, int columns);
     void populateNameTable(char** tbl,int rows, FILE* inFile);
     void printNameTable(char** tbl,int rows);
+    void findMinMax(char** tbl,int rows, char* min, char* max);
 
     FILE* inFile;
     char iFileName[] =  
     "H:\\GitHubLocalRepository\\c-exercises\\dynamicArray\\listOfNames.txt";
     int names = 0; // Number of names found in the input file
     int longestName = 0; // Number of characters in the longest name
+    char minString[MAXNAMELENGTH],maxString[MAXNAMELENGTH];
     inFile = fopen(iFileName,"r"); 
     determineArraySize(inFile,&names,&longestName);
     printf("Names = %d, Longest name = %d\n",names,longestName);
@@ -30,10 +32,12 @@ int main()
     char** nameTable = allocateMemory(names,longestName+1);
     populateNameTable(nameTable,names,inFile);
     printNameTable(nameTable,names);
+    findMinMax(nameTable,names,minString,maxString);
+    printf("\nThe 1st name in the alphabetical order is %s.\n",minString);
+    printf("The last name in the alphabetical order is %s.\n",maxString);
 
 
 
-    printf("Hello world!\n");
     return 0;
 }
 //------------------------------ determineArraySize ----------------------------  
@@ -82,8 +86,33 @@ void populateNameTable(char** tbl,int rows, FILE* inFile) {
 void printNameTable(char** tbl,int rows) {
     // This function prints all the names in the nameTable.
     int r;
+    printf("\nThe names are as follows:\n");
     for(r=0;r<rows;r++) {
         printf("%s\n",tbl[r]);
     }
     return;
 }
+//------------------------------ findMinMax ------------------------------  
+void findMinMax(char** tbl,int rows, char* min, char* max) {
+    // This function goes through all the names in the tbl and finds the
+    // 1st and the last of the names from the alphabethical point of view.
+    char first[MAXNAMELENGTH];
+    char last [MAXNAMELENGTH];
+    strcpy(first,tbl[0]); // Initialize
+    strcpy(last,tbl[0]);  // Initialize
+    int r;
+    for(r=1;r<rows;r++) {
+        // strcmp returns negative if str1 < str2.
+        if(strcmp(tbl[r],first) < 0) {  
+            strcpy(first,tbl[r]); // A new first has been found
+        } else if(strcmp(last,tbl[r]) < 0) {
+            strcpy(last,tbl[r]); // A new last has been found.
+        }
+    }
+    // Return the found min and max into the calling function (= main)
+    strcpy(min,first);
+    strcpy(max,last);
+    return;
+}
+
+
