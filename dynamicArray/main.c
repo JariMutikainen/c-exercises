@@ -12,7 +12,7 @@ int main()
 {
     
     void determineArraySize(FILE* inFile,int* names,int* longestName);
-    char** allocateMemory(int rows, int columns);
+    void allocateMemory(int rows, int columns,char*** pToNameTable);
     void populateNameTable(char** tbl,int rows, FILE* inFile);
     void printNameTable(char** tbl,int rows);
     void findMinMax(char** tbl,int rows, char* min, char* max);
@@ -29,7 +29,8 @@ int main()
     fclose(inFile); // Close and re-open to init the read pointer of the file
     inFile = fopen(iFileName,"r"); // back into the begining
 
-    char** nameTable = allocateMemory(names,longestName+1);
+    char** nameTable ; 
+    allocateMemory(names,longestName+1,&nameTable);
     populateNameTable(nameTable,names,inFile);
     printNameTable(nameTable,names);
     findMinMax(nameTable,names,minString,maxString);
@@ -55,7 +56,7 @@ void determineArraySize(FILE* inFile,int* names,int* longestName) {
     return;
 }
 //------------------------------ allocateMemory ------------------------------  
-char** allocateMemory(int rows, int columns) {
+void allocateMemory(int rows, int columns, char*** pToNameTable) {
     // Allocate memory from the heap for a 2-dimensional array as needed.
     // The elements of the nameTable[] are pointers to char - i.e.
     // pointers to the 1st character of each row (= each name).
@@ -69,7 +70,8 @@ char** allocateMemory(int rows, int columns) {
     for(i=1;i<rows;i++) {
         matrix[i] = matrix[0] + i * columns;
     }
-    return matrix;
+    *pToNameTable = matrix;
+    return;
 }
 //------------------------------ populateNameTable --------------------  
 void populateNameTable(char** tbl,int rows, FILE* inFile) {
