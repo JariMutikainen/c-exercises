@@ -8,7 +8,6 @@ e. Write line, no. of tokens and the tokens in o/p file
 2) Write a program that takes an input from a file and read into an array.
    Build this array as dynamic array. Find the largest and smallest elements.
    Input is a list of names
-   
 3) Write a program that reads from an input file (having a set of names) and store the same in a linked list.
 a. Display the contents of linked list
 b. Traverse the linked list and deleted all nodes having names whose length is less than 10 chars
