@@ -10,7 +10,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#define MAXNAMELENGTH 30
+#define MAXNAMELENGTH 30  /*The max length, that can be read from the input file.*/
+#define MINNAMELENGTH 13  /*The min length to survive the pruning phase.*/
 
 typedef struct node_s {
     char* name;
@@ -19,16 +20,18 @@ typedef struct node_s {
 
 int main()
 {
-    void createdLinkedList(pNode_t* head);
+    void createLinkedList(pNode_t* head);
     void printLinkedList(const pNode_t head);
+    void pruneShortNames(pNode_t* head, int minNameLength);
     pNode_t top = NULL;  // The pointer to the top element of the linked list
-    createdLinkedList(&top);
+    createLinkedList(&top);
     //printf("'top' points at %p now.\n",top);
     printLinkedList(top);
+    pruneShortNames(&top,MINNAMELENGTH);
     return 0;
 }
-//------------------------------ createdLinkedList ---------------------------  
-void createdLinkedList(pNode_t* head) {
+//------------------------------ createLinkedList ---------------------------  
+void createLinkedList(pNode_t* head) {
     // This function reads a list of names from the input file. It creates
     // a linked list of those names. To learn to use pointers better I decided to
     // manipulate the 'top'-pointer of the main directly from within this
@@ -86,5 +89,21 @@ void printLinkedList(const pNode_t head) {
         // been printed yet - so let's do it now.
         printf("%s\n",p->name);
     }
+    return;
+}
+//------------------------------ minNameLength ------------------------------  
+void pruneShortNames(pNode_t* head, int minNameLength) {
+    // This function traverses through the linked list and removes all the
+    // names, which are shorter than minNameLength.
+    pNode_t p = *head; // Point at the 1st element to start with.
+    pNode_t pPrev = NULL;
+    if(p == NULL) {
+        printf("The linked list is already empty.\n");
+        return;
+    }
+    printf("\nPruning out all the names shorter than %d.\n",minNameLength);
+
+
+
     return;
 }
