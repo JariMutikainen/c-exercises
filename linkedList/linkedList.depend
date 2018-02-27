@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1519549688 source:h:\githublocalrepository\c-exercises\linkedlist\main.c
+	<stdio.h>
+	<stdlib.h>
+
