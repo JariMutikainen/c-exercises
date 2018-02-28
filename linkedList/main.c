@@ -2,7 +2,7 @@
  * store the same in a linked list.
 * a. Display the contents of linked list
 * b. Traverse the linked list and deleted all nodes having names whose length 
-* is less than 10 chars
+* is less than 13 chars
 * c. Display the contents of updated linked list
 
  */
@@ -28,6 +28,7 @@ int main()
     //printf("'top' points at %p now.\n",top);
     printLinkedList(top);
     pruneShortNames(&top,MINNAMELENGTH);
+    printLinkedList(top);
     return 0;
 }
 //------------------------------ createLinkedList ---------------------------  
@@ -71,16 +72,16 @@ void createLinkedList(pNode_t* head) {
     }
     return;
 }
+
 //------------------------------ printLinkedList ------------------------------  
 void printLinkedList(const pNode_t head) {
     // This function traverses through a linked list and prints all the names
     // in it.
     pNode_t p = head;
-    printf("p = %p to start with.\n",p);
     if(p == NULL) {
         printf("The linked list is empty.\n");
     } else {
-        printf("The linked list consists of the following names:\n");
+        printf("\nThe linked list consists of the following names:\n\n");
         while(p->pNext) { // The last node has NULL as pNext.
             printf("%s\n",p->name);
             p = p->pNext; // Move on to the next node in the chain.
@@ -97,13 +98,58 @@ void pruneShortNames(pNode_t* head, int minNameLength) {
     // names, which are shorter than minNameLength.
     pNode_t p = *head; // Point at the 1st element to start with.
     pNode_t pPrev = NULL;
+    pNode_t pTemp = NULL;
+
     if(p == NULL) {
         printf("The linked list is already empty.\n");
         return;
     }
     printf("\nPruning out all the names shorter than %d.\n",minNameLength);
+    while(p->pNext) { // The pNext-field of only the last node is NULL.
+        //printf("%s\n",p->name);
+        if(strlen(p->name) < minNameLength) { // Too short a name must be pruned.
+            if(p == *head) { // If this is the 1st node of the linked list.
+                printf("Removing the 1st node %s as too short.\n",p->name);
+                pPrev = NULL;
+                *head = p->pNext; // Update the 'top'-pointer in main.
+                pTemp = p;
+                p = p->pNext; // Move on to the new 1st
+                free(pTemp);
+            } else { // Other than 1st node has to be removed.
+                printf("Removing a middle node %s as too short.\n",p->name);
+                pTemp = p;
+                pPrev->pNext = p->pNext; // Prune out the node pointed by p.
+                p = p->pNext; // Move p to the next node.
+                free(pTemp);
+            }
+        } else { // No pruning, just move on to the next node in the list.
 
-
+            pPrev = p;
+            p = p->pNext;
+        }
+    }
+    // When we get here p is pointing at the last node of the linked list.
+    if(strlen(p->name) < minNameLength) { // Too short a name must be pruned.
+        if(p == *head) { // If this is the 1st (= the only) node of the linked list.
+            printf("Removing the only node %s as too short.\n",p->name);
+            pTemp = p;
+            *head = NULL;  // Update 'top' in main.
+            pPrev = NULL;
+            p = NULL;
+            free(pTemp);
+        } else { // This is the last, but not the only node, and it needs to be pruned.
+            printf("Removing the last node %s as too short.\n",p->name);
+            pTemp = p;
+            pPrev->pNext = NULL; // pPrev becomes the new last.
+            pPrev = NULL;
+            p = NULL;
+            free(pTemp);
+        }
+    } else { // No need to prune out the last node. We have traversed the entire list now.
+        pTemp = NULL;
+        pPrev = NULL;
+        p = NULL;
+    }
 
     return;
 }
