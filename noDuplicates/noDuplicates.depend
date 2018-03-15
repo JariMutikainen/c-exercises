@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1521101011 source:h:\githublocalrepository\c-exercises\noduplicates\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
