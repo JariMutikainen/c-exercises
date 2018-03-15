@@ -60,4 +60,5 @@ dkms.conf
 # The backupfiles of vim
 *.swp
 
+*.bak
 
