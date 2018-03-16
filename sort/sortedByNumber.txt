@@ -1,0 +1,10 @@
+ 113              Balboa Rocky 2301.4 1177
+ 201              Trump Donald 2776.4 1177
+ 767              Silvola Mika 2514.0 3312
+ 778           Ylisirnio Pekka 2622.5 3312
+1190               Narumo Timo 2561.7 2233
+1215             Kosunen Petri 2525.0 2233
+1254           Mutikainen Jari 2500.0 2233
+5571    Krishnamurthy Karthika 2600.0 2233
+5678                Bauer Jack 2567.0 1177
+7021         Koskiranta Ilmari 2400.0 2244
