@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1521189398 source:h:\githublocalrepository\c-exercises\sort\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+
