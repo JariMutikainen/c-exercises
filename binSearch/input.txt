@@ -1,0 +1,1 @@
+This is a sample text. Collect these words and remove the punctuation.
