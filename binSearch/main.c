@@ -60,9 +60,17 @@ void populateWords(int* elems, char** table) {
         if(*elems == 0) { // This will be the 1st element of the table
             table[*elems] = pWord;
             (*elems)++;
+        } else if(*elems == 1) { // This will be the 2nd element
+            if(strcmp(table[0],pWord) < 0) { // pWord comes after
+                table[1] = pWord;
+            } else { // pWord becomes the new 1st
+                table[1] = table[0];
+                table[0] = pWord;
+            }
+            (*elems)++;
         } else {
             if(binarySearch(0,*elems,word,table) == -1) { // A new word
-                insertInPlace(pWord,elems,table);
+                //insertInPlace(pWord,elems,table);
             }
         }
     }
@@ -100,8 +108,12 @@ void insertInPlace(char* pWord, int* elems, char** tbl) {
     // This function inserts the newWord into the tbl[] so, that after the 
     // insertion the tbl[] remains still in the aplhabetical order.
 
-
-
-
+    int k = *elems - 1;
+    while(k >= 0 && strcmp(pWord,tbl[k]) < 0) { // pWord must come before tbl[k]
+        tbl[k+1] = tbl[k];
+        k--;
+    }
+    tbl[k+1] = pWord;
+    (*elems)++;
     return;
 }
