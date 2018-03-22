@@ -22,11 +22,13 @@ void printWords(int elems, char** tbl);
 int main()
 {
     void populateWords(int* elems, char** table);
+    void queryWords(int elems, char** tbl);
     char* words[MAXWORDS];
     int elements = 0;
 
     populateWords(&elements,words);
     printWords(elements,words);
+    queryWords(elements,words);
 
     return 0;
 }
@@ -119,3 +121,24 @@ void insertInPlace(char* pWord, int* elems, char** tbl) {
     (*elems)++;
     return;
 }
+//------------------------------ queryWords ------------------------------  
+void queryWords(int elems, char** tbl) {
+    // This function let's the user ask if a given word exists in the
+    // words[] array of main. The response is either 'found' or
+    // 'not found'.
+    char reply[MAXWORD];
+    printf("Enter a lower case word to be searched for or 'stop' to terminate: ");
+    scanf("%s",reply);
+    while(strcmp(reply,"stop") != 0) {
+        if(binarySearch(0,elems - 1,reply,tbl) == -1) {
+            printf("%s was not found in the array of words.\n",reply);
+        } else {
+            printf("%s was found in the array of words.\n",reply);
+        }
+        printf("Enter a lower case word to be searched for or 'stop' to terminate: ");
+        scanf("%s",reply);
+    }
+    return;
+}
+
+
