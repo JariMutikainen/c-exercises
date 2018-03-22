@@ -1,6 +1,6 @@
-/* 2.	Design an algorithm with a user interface to search a pattern in 
+/* 2.	Design an algorithm with a user interface to search a pattern in
  * a data collected from the standard user interface.
-* a.	Collect and intialize the data stream from standard user interface 
+* a.	Collect and intialize the data stream from standard user interface
 *       and store in a data structure or from stored data structure
 * b.	Accept search data pattern from standard user interface.
 * c.	Search the occurrence of data pattern in the stored data stream.
@@ -17,11 +17,11 @@
 
 
 int binarySearch(int lo, int hi, char key[], char** tbl);
+void printWords(int elems, char** tbl);
 
 int main()
 {
     void populateWords(int* elems, char** table);
-    void printWords(int elems, char** tbl);
     char* words[MAXWORDS];
     int elements = 0;
 
@@ -30,9 +30,9 @@ int main()
 
     return 0;
 }
-//------------------------------ populateWords ------------------------------  
+//------------------------------ populateWords ------------------------------
 void populateWords(int* elems, char** table) {
-    // This function reads the contents of the input.txt, converts all the 
+    // This function reads the contents of the input.txt, converts all the
     // found words into lower case and remove all the punctuation. The found
     // words are stored into the words[] of main in the alphaebtical order.
 
@@ -53,10 +53,10 @@ void populateWords(int* elems, char** table) {
             }
             p++;
         }
-        printf("%s\n",word);
         // Add the new words into the table
         pWord = (char *) malloc(strlen(word) + 1); // '\0' at the end.
         strcpy(pWord,word);
+        printf("pWord=%p, word=%s\n",pWord,pWord);
         if(*elems == 0) { // This will be the 1st element of the table
             table[*elems] = pWord;
             (*elems)++;
@@ -69,8 +69,10 @@ void populateWords(int* elems, char** table) {
             }
             (*elems)++;
         } else {
-            if(binarySearch(0,*elems,word,table) == -1) { // A new word
-                //insertInPlace(pWord,elems,table);
+            //printWords(*elems,table);
+
+            if(binarySearch(0,*elems - 1,word,table) == -1) { // A new word
+                insertInPlace(pWord,elems,table);
             }
         }
     }
@@ -80,7 +82,7 @@ void populateWords(int* elems, char** table) {
 
 
 
-//------------------------------ binarySearch ------------------------------  
+//------------------------------ binarySearch ------------------------------
 int binarySearch(int lo, int hi, char key[], char** tbl ) {
     // Search for key from tbl[lo] to tbl[hi]
     // if found return its' location else return -1
@@ -94,7 +96,7 @@ int binarySearch(int lo, int hi, char key[], char** tbl ) {
     }
     return -1; // lo and hi have crossed. Key was not found.
 }
-//------------------------------ printWords ------------------------------  
+//------------------------------ printWords ------------------------------
 void printWords(int elems, char** tbl) {
     // This function prints the contents of the tbl[]
     int i;
@@ -103,9 +105,9 @@ void printWords(int elems, char** tbl) {
     }
     return;
 }
-//------------------------------ insertInPlace ------------------------------  
+//------------------------------ insertInPlace ------------------------------
 void insertInPlace(char* pWord, int* elems, char** tbl) {
-    // This function inserts the newWord into the tbl[] so, that after the 
+    // This function inserts the newWord into the tbl[] so, that after the
     // insertion the tbl[] remains still in the aplhabetical order.
 
     int k = *elems - 1;
