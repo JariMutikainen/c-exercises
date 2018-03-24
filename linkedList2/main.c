@@ -14,11 +14,16 @@ void displayList(node_t* top);
 int main()
 {
     void appendNode(int num, node_t** pHead);
+    void updateNode(int old, int new, node_t* top);
+    void deleteNode(int num, node_t** pHead);
     node_t* head = NULL;
 
     appendNode(12,&head);
     appendNode(13,&head);
     appendNode(14,&head);
+
+    updateNode(13,33,head);
+    deleteNode(14,&head);
 
 
 
@@ -67,4 +72,74 @@ void displayList(node_t* top) {
     }
     return;
 }
+//------------------------------ updateNode ------------------------------  
+void updateNode(int old, int new, node_t* top) {
+    // This function updates the contents of the nodes, which have val=old.
+    // The new value is substituted for that.
+
+    node_t* p = top;
+
+    
+    if(p == NULL) {
+        printf("\nUnable to update. The linked list is empty now.\n\n");
+    } else{
+        while(p->next != NULL) {
+            if(p->val == old) {
+                p->val = new;
+                printf("Substituted %d for %d\n",new,old);
+            }
+            p = p->next;
+        }
+        // p is pointing at the last node now.
+        if(p->val == old) {
+            p->val = new;
+            printf("Substituted %d for %d\n",new,old);
+        }
+    }
+    displayList(top);
+    return;
+}
+//------------------------------ deleteNode ------------------------------  
+void deleteNode(int num, node_t** pHead) {
+    // This function deletes the first node with the val=num from the
+    // linked list.
+    
+    node_t* p = *pHead;
+    node_t* prev = NULL;
+    node_t* temp = NULL;
+    if(p == NULL) { // There are no nodes in the list.
+        printf("Unable to delete the node %d: the list is empty.\n",num);
+    } else {
+       while(p->next != NULL) {
+           if(p->val == num) {  // This node must be deleted
+                temp = p;
+                if(prev == NULL) { // delete the 1st node of the list
+                    *pHead = p->next;
+                    p = p->next;
+                    free(temp);
+                    printf("Deleted the 1st node %d.\n",num);
+                } else { // delete a middle node
+                    prev->next = p->next;
+                    p = p->next;
+                    free(temp);
+                    printf("Deleted the middle node %d.\n",num);
+                }
+           }
+           prev = p;
+           p = p->next;
+       }
+       // p is now pointing at the last node of the list.
+       if(p->val == num) {  // This node must be deleted
+            temp = p;
+            if(prev == NULL) { // delete the 1st node of the list
+                *pHead = p->next; // sets *pHead to NULL
+                free(temp);
+                printf("Deleted the only node %d.\n",num);
+            } else { // delete the last node
+                prev->next = p->next; // sets prev->next to NULL
+                free(temp);
+                printf("Deleted the last node %d.\n",num);
+            }
+       }
+
 
