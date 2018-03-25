@@ -24,8 +24,15 @@ int main()
 
     updateNode(13,33,head);
     deleteNode(14,&head);
+    deleteNode(13,&head);
+    deleteNode(33,&head);
+    deleteNode(12,&head);
+    deleteNode(77,&head);
 
 
+    appendNode(42,&head);
+    appendNode(43,&head);
+    appendNode(44,&head);
 
     return 0;
 }
@@ -104,6 +111,7 @@ void deleteNode(int num, node_t** pHead) {
     // This function deletes the first node with the val=num from the
     // linked list.
     
+    int itWasNotFound = 1;
     node_t* p = *pHead;
     node_t* prev = NULL;
     node_t* temp = NULL;
@@ -116,13 +124,15 @@ void deleteNode(int num, node_t** pHead) {
                 if(prev == NULL) { // delete the 1st node of the list
                     *pHead = p->next;
                     p = p->next;
+                    printf("Deleted the 1st node %d at %p.\n",num,temp);
                     free(temp);
-                    printf("Deleted the 1st node %d.\n",num);
+                    itWasNotFound = 0;
                 } else { // delete a middle node
                     prev->next = p->next;
                     p = p->next;
+                    printf("Deleted the middle node %d. at %p\n",num,temp);
                     free(temp);
-                    printf("Deleted the middle node %d.\n",num);
+                    itWasNotFound = 0;
                 }
            }
            prev = p;
@@ -133,13 +143,24 @@ void deleteNode(int num, node_t** pHead) {
             temp = p;
             if(prev == NULL) { // delete the 1st node of the list
                 *pHead = p->next; // sets *pHead to NULL
+                printf("Deleted the only node %d at %p.\n",num,temp);
                 free(temp);
-                printf("Deleted the only node %d.\n",num);
+                itWasNotFound = 0;
             } else { // delete the last node
                 prev->next = p->next; // sets prev->next to NULL
+                printf("Deleted the last node %d at %p.\n",num,temp);
                 free(temp);
-                printf("Deleted the last node %d.\n",num);
+                itWasNotFound = 0;
             }
        }
+       if(itWasNotFound) {
+           printf("Unable to delete node %d. No such node in the list.\n",num);
+       }
+    }
+    displayList(*pHead);
+    return;
+}
+
+
 
 
