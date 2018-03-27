@@ -15,13 +15,28 @@ int main()
 
     void routeA(int startTime, int* delay, int* cost);
     void routeB(int startTime, int* delay, int* cost);
+    int selectRoute(int aD, int bD, int dD);
+    int quickest;
     int aDelay,aCost;
     int bDelay,bCost;
-    int dDelay,dCost;
-    int i = 1;
+    int dDelay = 120;
+    int i ;
 
-    routeA(i,&aDelay,&aCost);
-    routeB(i,&bDelay,&bCost);
+    for(i = 1; i < 60; i+=2) {
+        routeA(i,&aDelay,&aCost);
+        routeB(i,&bDelay,&bCost);
+        printf("Route D, Walk. Start time %d minutes over hour ",i);
+        printf("-> duration %d minutes, no cost.\n",dDelay);
+        quickest = selectRoute(aDelay,bDelay,dDelay);
+        if(quickest == 1) {
+            printf("You should take the route A = train.\n\n");
+        } else if(quickest == 2) {
+            printf("You should take the route B = bus + train.\n\n");
+        } else {
+            printf("Go ahead and walk to the office taking the route D.\n\n");
+        }
+    }
+        
 
 
 
@@ -36,7 +51,7 @@ void routeA(int startTime, int* delay, int* cost) {
     int initialWait = 60 - startTime;
     *delay = initialWait + 30;
     *cost = 50;
-    printf("route A, Train. Start time %d minutes after hour ",startTime);
+    printf("route A. Start time %d minutes after hour ",startTime);
     printf("-> total duration = %d minutes, cost = $%d.\n",*delay,*cost);
     return;
 }
@@ -67,9 +82,24 @@ void routeB(int startTime, int* delay, int* cost) {
 
     *delay = initialWait + 20 + trainWait + 10;
     *cost = 25 + 30;
-    printf("route B, Bus + Train. Start time %d minutes after hour -> total duration = %d minutes, cost = $%d.\n",
-            startTime,*delay,*cost);
+    printf("route B. Start time %d minutes after hour ",startTime);
+    printf("-> total duration = %d minutes, cost = $%d.\n",*delay,*cost);
     return;
 }
 
     
+//------------------------------ selectRoute ------------------------------  
+int selectRoute(int aD, int bD, int dD) {
+    // This function selects the quickest of the 3 alternative routes.
+
+    int min = aD;
+    if(bD < min) min = bD;
+    if(dD < min) min = dD;
+
+    if(min == aD) return 1;
+    if(min == bD) return 2;
+    if(min == dD) return 3;
+    return 0; // This will never happen, but it makes the compiler happy.
+}
+
+
