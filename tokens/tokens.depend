@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1522314441 source:h:\githublocalrepository\c-exercises\tokens\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+
