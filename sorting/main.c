@@ -65,4 +65,28 @@ int selectSwapIndex(int* t, int lo, int hi, char dir) {
     // into an ascending order. Otherwise this function returns the index of 
     // the largest element of the array in the range of lo - hi. This is 
     // used when doing a descending sort.
+    int smallest,largest,k;
+    if(dir == 'a') { // find the index of the smallest element for ascending sort 
+        smallest = lo;
+        for(k=lo+1;k<=hi;k++) {
+            if(t[k] < t[smallest]) smallest = k; // We found a new smallest
+        }
+        return smallest;
+    } else { // Find the index of the largest element for a descending sort
+        largest = lo;
+        for(k=lo+1;k<=hi;k++) {
+            if(t[k] > t[largest]) largest = k; // We found a new largest
+        }
+        return largest;
+    }
+    return -1;
+}
+//------------------------------ swap ------------------------------  
+void swap(int *t, int lo, int hi) {
+    // Swap the two elements of the array.
+    int temp;
+    temp = *(t+lo);
+    *(t+lo) = *(t+hi);
+    *(t+hi) = temp;
+}
 
