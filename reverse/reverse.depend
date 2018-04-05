@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1522306697 source:h:\githublocalrepository\c-exercises\reverse\main.c
+1522920395 source:h:\githublocalrepository\c-exercises\reverse\main.c
 	<stdio.h>
 	<stdlib.h>
 	<ctype.h>
