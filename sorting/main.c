@@ -15,6 +15,8 @@ int main()
     void selectionSort(int tbl[], int elems, char direction);
     void insertionSort(int tbl[], int elems, char direction);
     void bubbleSort(int tbl[], int elems, char direction);
+    void (*sortFunction)(int tbl[], int elems, char direction);
+    char stype,sortDir;
     FILE* in;
     in = fopen("numbers.txt","r");
     int num;
@@ -26,18 +28,40 @@ int main()
     }
     printf("The original list of numbers:\n");
     displayNumbers(numbers,elements);
-
-    selectionSort(numbers,elements,'a');
-    printf("\nAfter ascending selection sort:\n");
-    displayNumbers(numbers,elements);
-
-    insertionSort(numbers,elements,'d');
-    printf("\nAfter decending insertion sort:\n");
-    displayNumbers(numbers,elements);
-
-    bubbleSort(numbers,elements,'a');
-    printf("\nAfter ascending bubble sort:\n");
-    displayNumbers(numbers,elements);
+    while(1) {
+        printf("Select the sorting algorithm:\n");
+        printf("Selection sort = 's', Insertion sort = 'i', Bubble sort = 'b'\n");
+        scanf("%c%*c",&stype); // %*c flushes the '\n' out from the read buffer.
+        //printf("Debug: stype = %c\n",stype);
+        printf("Select the sorting direction:\n");
+        printf("Ascending = 'a', Decending = 'd'\n");
+        scanf("%c%*c",&sortDir); // %*c flushes the '\n' out from the read buffer.
+        //printf("Debug: sortDir = %c\n",sortDir);
+        if(stype == 's') sortFunction = selectionSort;
+        else if(stype == 'i') sortFunction = insertionSort;
+        else if(stype == 'b') sortFunction = bubbleSort;
+        else {
+            printf("Unknown sort type.\n");
+            break;
+        }
+        if(sortDir != 'a' && sortDir != 'd') {
+            printf("Unknown sort direction.\n");
+            break;
+        }
+        sortFunction(numbers,elements,sortDir);
+        displayNumbers(numbers,elements);
+    }
+//    selectionSort(numbers,elements,'a');
+//    printf("\nAfter ascending selection sort:\n");
+//    displayNumbers(numbers,elements);
+//
+//    insertionSort(numbers,elements,'d');
+//    printf("\nAfter decending insertion sort:\n");
+//    displayNumbers(numbers,elements);
+//
+//    bubbleSort(numbers,elements,'a');
+//    printf("\nAfter ascending bubble sort:\n");
+//    displayNumbers(numbers,elements);
 
 
     printf("Hello world!\n");
