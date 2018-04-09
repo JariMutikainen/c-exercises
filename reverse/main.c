@@ -71,7 +71,7 @@ int main(int argc, char *a[])
 //            inString,outString,letters);
 
     if(strlen(letters) == 0) {
-        printf("No reversal possible.\n");
+        printf("No reversal possible\n");
     } else {
         printf("%s\n",outString);
     }
