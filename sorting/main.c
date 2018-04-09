@@ -14,6 +14,7 @@ int main()
     void displayNumbers(int* tbl, int elems);
     void selectionSort(int tbl[], int elems, char direction);
     void insertionSort(int tbl[], int elems, char direction);
+    void bubbleSort(int tbl[], int elems, char direction);
     FILE* in;
     in = fopen("numbers.txt","r");
     int num;
@@ -31,8 +32,13 @@ int main()
     displayNumbers(numbers,elements);
 
     insertionSort(numbers,elements,'d');
-    printf("\nAfter decending selection sort:\n");
+    printf("\nAfter decending insertion sort:\n");
     displayNumbers(numbers,elements);
+
+    bubbleSort(numbers,elements,'a');
+    printf("\nAfter ascending bubble sort:\n");
+    displayNumbers(numbers,elements);
+
 
     printf("Hello world!\n");
     return 0;
@@ -110,7 +116,7 @@ void swap(int *t, int lo, int hi) {
 //------------------------------ insertionSort ------------------------------  
 void insertionSort(int tbl[], int elems, char direction) {
     // This function sorts the elements of the tbl[] into the ascending order
-    // ni case the direction ='a'. If the direction is 'd' the elements are
+    // in case the direction ='a'. If the direction is 'd' the elements are
     // sorted into the descending order instead.
 
     int (*shiftCondition)(int k,int key,int currElem); // A function pointer
@@ -125,4 +131,74 @@ void insertionSort(int tbl[], int elems, char direction) {
         // until it is larger than the current element.
         shiftCondition = shiftForDecendingSort;
     }
+    int k,h;
+    int key;
+    for(h=1;h<elems;h++) {
+        key = tbl[h];
+        k = h - 1; // Start comparing with the previous element.
+        while(shiftCondition(k,key,tbl[k])) {
+            tbl[k+1] = tbl[k]; // Shift right
+            k--;
+        }
+        // By now the correct place for the key has been found
+        tbl[k+1] = key;
+    }
+    return;
+}
+//------------------------------ shiftForAscendingSort --------------------  
+int shiftForAscendingSort(int k,int key,int currElem) {
+    // This function returns 1 if right shifting should be continued, 
+    // else it returns 0. For the ascending sort the right shifting
+    // must continue as long as thr key (to be inserted) is smaller than 
+    // the current element.
+    return (k >= 0 && key < currElem);
+}
+//------------------------------ shiftForDecendingSort --------------------  
+int shiftForDecendingSort(int k,int key,int currElem) {
+    // This function returns 1 if right shifting should be continued, 
+    // else it returns 0. For the decending sort the right shifting
+    // must continue as long as thr key (to be inserted) is larger than 
+    // the current element.
+    return (k >= 0 && key > currElem);
+}
 
+//------------------------------ bubbleSort ------------------------------  
+void bubbleSort(int tbl[], int elems, char direction) {
+    // This function sorts the elements of the tbl[] into the ascending order
+    // in case the direction ='a'. If the direction is 'd' the elements are
+    // sorted into the descending order instead.
+    int swapIsNeeded(int elemI, int elemJ, char dir);
+    int i,j,temp;
+    for(i=0;i<elems-1;i++) {
+        for(j=i+1;j<elems;j++) {
+            if(swapIsNeeded(tbl[i],tbl[j],direction)) {
+                temp = tbl[i];
+                tbl[i] = tbl[j];
+                tbl[j] = temp;
+            }
+        }
+    }
+    return;
+}
+//------------------------------ swapIsNeeded ------------------------------  
+int swapIsNeeded(int elemI, int elemJ, char dir) {
+    // This function return a 1 if the two elements need to be swapped,
+    // else it returns a 0.
+    // In the case of the ascending sort order (dir == 'a') the smaller
+    // element must come first. In the case of a descending sort the larger
+    // element must come first.
+    if(dir == 'a') { // An ascending sort
+        if(elemJ < elemI) {
+            return 1;
+        } else {
+            return 0;
+        }
+    } else { // A descending sort
+        if(elemJ > elemI) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+    return -1; // This should never happen
+}
