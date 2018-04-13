@@ -13,7 +13,6 @@ int main(void) {
     printf("Enter a number: ");
     scanf("%d",&num);
     printf("Number is: %d.\n",num);
-    getchar();
     return 0;
 }
 
