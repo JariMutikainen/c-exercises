@@ -43,6 +43,7 @@ int main()
     // their order.
     //
 
+    //display(charStack,&topOfStack);
     printf("ZZ");
     while(topOfStack >= 0) {
         printf("%c",pop(charStack,&topOfStack));
