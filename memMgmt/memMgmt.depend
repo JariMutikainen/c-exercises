@@ -1,0 +1,23 @@
+# depslib dependency file v1.0
+1214307200 source:f:\githublocalrepos\c-exercises\memmgmt\alloc_mem.c
+	<stdio.h>
+	<stdlib.h>
+	"types.h"
+
+1524729016 f:\githublocalrepos\c-exercises\memmgmt\types.h
+
+1214308232 source:f:\githublocalrepos\c-exercises\memmgmt\free_mem.c
+	<stdio.h>
+	<stdlib.h>
+	"types.h"
+
+1214310362 source:f:\githublocalrepos\c-exercises\memmgmt\init_mem_blk.c
+	<stdio.h>
+	<stdlib.h>
+	"types.h"
+
+1524828377 source:f:\githublocalrepos\c-exercises\memmgmt\main.c
+	<stdio.h>
+	<stdlib.h>
+	"types.h"
+
