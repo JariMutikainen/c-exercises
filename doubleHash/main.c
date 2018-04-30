@@ -22,6 +22,7 @@ int main()
     void initHashTable(int* hTbl, int maxIndex, int* elems);
     void showHashTable(int* hTbl, int maxIndex);
     void searchAndInsert(int* hTbl, int maxIndex, int* elems, int key);
+    void searchAndDelete(int* hTbl, int maxIndex, int* elems, int key);
     int hashTable[NUM_OF_LOCATIONS + 1]; // 0 never used. Locations available:
                                          // 1-21.
     int elements = 0; // The number of elements in the hashTable[]
@@ -36,6 +37,10 @@ int main()
             case 1: printf("Number to be inserted: ");
                     scanf("%d",&resp);
                     searchAndInsert(hashTable,NUM_OF_LOCATIONS,&elements,resp);
+                    break;
+            case 2: printf("Number to be Deleted: ");
+                    scanf("%d",&resp);
+                    searchAndDelete(hashTable,NUM_OF_LOCATIONS,&elements,resp);
                     break;
             case 3: showHashTable(hashTable,NUM_OF_LOCATIONS);
                     break;
@@ -105,6 +110,29 @@ void searchAndInsert(int* hTbl, int maxIndex, int* elems, int key) {
         }
     } else {
         printf("Not inserted. %d is already in the hashTable[%d].\n",key,loc);
+    }
+    return;
+}
+//------------------------------ searchAndDelete ------------------------------  
+void searchAndDelete(int* hTbl, int maxIndex, int* elems, int key) {
+    // Searches for key in the hTbl[]. If found deletes it and replaces the
+    // contetns of the location with DELETED-pattern.
+
+    int loc = (key % H1) + 1; // An integer from 1 to 21
+    int step = (key % H2) + 1; // An integer from 1 to 19
+    printf("Trying to delete %d. Initial loc = %d, step = %d.\n",
+            key,loc,step);
+    while(hTbl[loc] != EMPTY && hTbl[loc] != key) {
+        printf("Collision with %d in hashTable[%d].\n",hTbl[loc],loc);
+        loc = loc + step;
+        if(loc > maxIndex) loc = loc - maxIndex; // loc is always from 1 to 21
+    }
+    if(key == hTbl[loc]) {
+        printf("Deleted %d in hashTable[%d].\n",key,loc);
+        hTbl[loc] = DELETED;
+        (*elems)--;
+    } else {
+        printf("Nothing was deleted. %d was not found in the hashTable[].\n",key);
     }
     return;
 }
